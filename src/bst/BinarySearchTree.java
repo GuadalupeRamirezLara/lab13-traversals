@@ -204,19 +204,28 @@ public class BinarySearchTree<T extends Comparable<T>> {
 	//to appear on the stack you will print.
 	public void postOrderStack() {
 		Stack<BSTNode<T>> post = new Stack<>();
-		Stack<BSTNode<T>> postHelper = new Stack<>();
-		if(root!=null) {
-			postHelper.push(root);
-			while(!postHelper.isEmpty()) {
-				//how should post and postHelper be updated?
-			}
-			
-			while(!post.isEmpty()) {
-				BSTNode<T> node = post.pop();
-				System.out.print(node + " ");
-			}
-		}
+        Stack<BSTNode<T>> postHelper = new Stack<>();
 
+        if(root!=null) {
+            postHelper.push(root);
+            while(!postHelper.isEmpty()) {
+                //how should post and postHelper be updated?
+                BSTNode<T> temp = postHelper.pop();
+                post.push(temp);
+
+                // Push left and right children of
+                // removed item to s1
+                if (temp.leftChild != null)
+                    postHelper.push(temp.leftChild);
+                if (temp.rightChild != null)
+                    postHelper.push(temp.rightChild);
+            }
+
+            while(!post.isEmpty()) {
+                BSTNode<T> node = post.pop();
+                System.out.print(node + " ");
+            }
+        }
 	}
 	
 	public String toString() {
@@ -261,9 +270,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
 		System.out.println("Post Order Traversals");
 		bst.postOrder();
 		System.out.println();
+		System.out.println("Post Order Traversals: STACK");
 		bst.postOrderStack();
-		
-		
 	}
 	
 
